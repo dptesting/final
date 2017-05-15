@@ -17,11 +17,7 @@ function signup($pdo, $username, $password, $email) {
         if($username && $password  && $email) {
         //insert into database
         $stmt = $pdo->prepare('INSERT INTO blog_members (username,password,email) VALUES (:username, :password, :email)');
-        $stmt->execute(array(
-            ':username' => $username,
-            ':password' => $hashedpassword,
-            ':email' => $email
-        ));
+        $stmt->execute([':username' => $username,':password' => $hashedpassword,':email' => $email]);
 
         //redirect to index page
         header('Location: index.php');
