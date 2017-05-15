@@ -20,7 +20,7 @@ function signup($pdo, $username, $password, $email) {
         $stmt->execute([':username' => $username,':password' => $hashedpassword,':email' => $email]);
 
         //redirect to index page
-        header('Location: index.php');
+        header('Location: index_1.php');
         exit;
     } else {
     //catch (PDOException $e) {

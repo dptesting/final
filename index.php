@@ -12,9 +12,7 @@ and open the template in the editor.
     <body>
         <?php
       include 'common.php';
-      use function Movie\Db\read_user;
       
-      echo "you are logged in";
       
         try {
         $stmt = $pdo->query('SELECT postID, postTitle, postDesc, postDate FROM blog_posts ORDER BY postID DESC');//lists posts from 

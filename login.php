@@ -10,6 +10,7 @@ include 'lib/Movie/Auth/movie_auth.php';
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     Movie\Auth\login($pdo, $_POST['username'], $_POST['password']);
+    //Movie\Auth\get_user_hash($pdo, $_POST['username'], $_POST['password']);
 }
 ?>
 
