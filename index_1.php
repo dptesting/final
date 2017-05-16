@@ -33,8 +33,7 @@ echo "you are logged in";
                 //  echo '<p><a href="viewpost.php?id='.$row['postID'].'">Read More</a></p>';                
                 echo '</div>';
             }
-        } 
-        catch (PDOException $e) {
+        } catch (PDOException $e) {
             echo $e->getMessage();
         }
         ?>

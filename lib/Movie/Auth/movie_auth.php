@@ -2,11 +2,9 @@
 
 namespace Movie\Auth;
 
-
 use function Movie\Db\read_user;
 
 session_start(); //session_start() must always be called to ensure $_SESSION is populated properly, and if not, to issue a cookie to a browser so that it can be.
-
 
 function login($pdo, $username, $password) {
     $user = read_user($pdo, $username, $password);
@@ -21,7 +19,6 @@ function login($pdo, $username, $password) {
         ;
     }
 }
-
 
 function logout() {
     ob_end_clean();
