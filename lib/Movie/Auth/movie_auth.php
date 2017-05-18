@@ -8,10 +8,8 @@ session_start(); //session_start() must always be called to ensure $_SESSION is 
 
 function login($pdo, $username, $password) {
     $user = read_user($pdo, $username, $password);
-    //print_r($user);
 
     if ($username && password_verify($password, $user['password'])) {
-        //print_r($user['password']);
         $_SESSION['username'] = $username;
         header('Location: index_1.php');
     } else {
