@@ -1,11 +1,16 @@
 <?php
 include 'common.php';
 include 'lib/Movie/View/movie_view.php';
+include 'lib/Movie/Validation/movie_validation.php';
+
+use function Movie\Validation\test_input;
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    Movie\Db\search($pdo, $_POST['postTitle']);
+    $query = test_input($_POST['postTitle']);
+
+    Movie\Db\search($pdo, $query);
 }
 ?>
 

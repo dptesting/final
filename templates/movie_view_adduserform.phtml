@@ -1,18 +1,17 @@
-<form action="" method="post">
+<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
 
     <p><label for="username">Username</label><br />
-        <input name="username" type="text" /></p>
+        <input name="username" type="text" pattern=".{6,30}" required title="must be greater than 6 characters" placeholder="Username";/>
 
     <p><label for="password">Password</label><br />
-        <input name="password" type="password" /></p>
+        <input name="password" type="password" pattern=".{6,10}" required title="must be greater than 6 characters" placeholder="Password";/>
 
     <p><label for="passwordConfirm">Confirm Password</label><br />
-        <input name="password" type="passwordConfirm" /></p>
+        <input name="passwordConfirm" type="password" required=""/>
 
     <p><label for="email">Email</label><br />
-        <input name="email" type="text" /></p>
+        <input name="email" type="text" required="" placeholder="Email@example.com";/>
 
     <p><input type="submit" name="submit" value='Add User'></p>
 
 </form>
-

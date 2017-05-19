@@ -18,5 +18,6 @@ try {
     die($e->getMessage());
 }
 set_error_handler(function ($errorType, $errorMessage) {
-    echo 'error';
+    //echo 'error';
+    echo \Movie\View\display('error', ['message' => $errorMessage]);
 });

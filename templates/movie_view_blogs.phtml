@@ -1,15 +1,21 @@
 <form action="" method="post">
 
     <p><label>Title</label><br />
-        <input type="text" name="postTitle" /></p>
+        <input type="text" name="title" required=""/></p>
+    
+        <p><label>Rating</label><br />
+        <input type="text" name="ratingID" required=""/></p>
+        
+            <p><label>Movie</label><br />
+        <input type="text" name="movieID" required=""/></p>
 
     <p><label>Description</label><br />
-        <textarea name="postDesc" cols="60" rows="10" /></textarea><</p>
+        <textarea name="description" cols="60" rows="10" required=""/></textarea><</p>
 
     <p><label>Content</label><br />
-        <textarea name="postCont" cols="60" rows="10" /></textarea></p>
+        <textarea name="content" cols="60" rows="10" required=""/></textarea></p>
 
-    <p><input type="submit" name="submit" value="Submit"></p>
+    <p><input type="submit" name="submit" value="Submit" required=""></p>
 
 </form>
 

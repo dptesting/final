@@ -29,7 +29,7 @@ echo "you are logged in";
         if (isset($_GET['logout'])) {
             logout();
         }
-
+        \Movie\Db\movies($pdo);
         \Movie\Db\recent_blogs($pdo);
         ?>
 

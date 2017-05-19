@@ -22,8 +22,8 @@
         if (isset($_GET['search'])) {
             search();
         }
-
-        \Movie\Db\recent_blogs($pdo);
+        \Movie\Db\movies($pdo);
+        //\Movie\Db\recent_blogs($pdo);
         ?>
 
     </body>
