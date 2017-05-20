@@ -8,29 +8,41 @@
     <body>
         <?php
         include 'common.php';
-        echo "<a href = 'login.php?login'>Login</a>";
-        if (isset($_GET['login'])) {
-            login();
+
+        use function Movie\Db\read_user;
+
+session_start();
+
+        echo $_SESSION['login_user'] . " is logged in";
+
+        if ($_SESSION['login_user'] == 'blog_admin') {
+            echo "<br><a href = 'signup.php?signup'>Signup</a>";
+            if (isset($_GET['signup'])) {
+                signup();
+            }
+            echo "<br><a href = 'blog.php?blog'>Add Blog</a>";
+            if (isset($_GET['blog'])) {
+                blogs();
+            }
         }
-        echo "<br><a href = 'signup.php?signup'>Signup</a>";
-        if (isset($_GET['signup'])) {
-            signup();
+
+        echo "<br><a href = 'comments.php?comment'>Comments</a>";
+        if (isset($_GET['comments'])) {
+            addcomments();
         }
         echo "<br><a href = 'search.php?search'>Search</a>";
         if (isset($_GET['search'])) {
             search();
         }
-
-        use function Movie\Db\read_user;
-
-echo "you are logged in";
-
-        echo "<a href = 'index.php?logout'>Logout</a>";
+        echo "<br><a href = 'index.php?logout'>Logout</a>";
         if (isset($_GET['logout'])) {
             logout();
         }
+
+
         \Movie\Db\movies($pdo);
         \Movie\Db\recent_blogs($pdo);
+        \Movie\Db\comments($pdo);
         ?>
 
     </body>

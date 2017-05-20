@@ -49,6 +49,8 @@ function movies($pdo) {//list movies
     }
 }
 
+//BLOG FUNCTIONS
+
 function blogs($pdo, $title, $desc, $content) {//adds a post
     try {
         //insert into database
@@ -109,6 +111,36 @@ function viewpost($pdo) {
         echo '<p>' . $row['description'] . '</p>';
         echo '<p>' . $row['content'] . '</p>';
         echo '</div>';
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
+}
+
+//Comments FUNCTIONS
+
+function addcomments($pdo, $comment, $member) {//adds a post
+    try {
+        //insert into database
+        $stmt = $pdo->prepare('INSERT INTO comments (comment, date, member) VALUES (:comment, :date, :member)');
+        $stmt->execute([':comment' => $comment, ':date' => date('Y-m-d H:i:s'), ':member' => $member]);
+        //redirect to index page
+        header('Location: index_1.php');
+        exit;
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
+}
+
+function comments($pdo) {
+    try {
+        $stmt = $pdo->query('SELECT * FROM comments ORDER BY commentID DESC'); //lists posts from 
+        while ($row = $stmt->fetch()) {
+
+            echo '<div>';
+            echo '<p>Posted on ' . date('jS M Y H:i:s', strtotime($row['date'])) . '</p>';
+            echo '<p>' . $row['comment'] . '</p>';
+            echo '</div>';
+        }
     } catch (PDOException $e) {
         echo $e->getMessage();
     }

@@ -4,7 +4,7 @@ include 'lib/Movie/View/movie_view.php';
 include 'lib/Movie/Validation/movie_validation.php';
 
 use function Movie\Validation\test_input;
-use function Movie\Validation\valid;
+use function Movie\Validation\validtext;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -14,15 +14,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $movie = test_input($_POST['movieID']);
     $rating = test_input($_POST['ratingID']);
 
-    /*  if (!valid($desc)) {
+    if (!validtext($desc)) {
       echo "Only letters and numbers allowed";//need to include spaces
       die();
       }
 
-      if (!valid($content)) {
+      if (!validtext($content)) {
       echo "Only letters and numbers allowed";//need to include spaces
       die();
-      } */
+      } 
 
     Movie\Db\blogs($pdo, $title, $desc, $content, $_POST['date'], $movie, $rating);
 }
