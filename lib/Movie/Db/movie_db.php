@@ -23,6 +23,13 @@ function signup($pdo, $username, $password, $email) {
     }
 }
 
+function delete_user($pdo, $username) {//deletes a user
+    print_r($username);
+    $stmt = $pdo->prepare("DELETE FROM blog_members WHERE username = :username");
+    $stmt->execute([':username' => $username]);
+    header('Location: index_1.php');
+}
+
 function read_user($pdo, $username) {//selects a user
     $stmt = $pdo->prepare("SELECT * FROM blog_members WHERE username = :username");
     $stmt->execute(['username' => $username]);
@@ -83,12 +90,12 @@ function search($pdo, $title) {//search for blog
 
 function recent_blogs($pdo) {
     try {
-        $stmt = $pdo->query('SELECT postID, title, description, content, date FROM blog_posts ORDER BY postID DESC'); //lists posts from 
+        $stmt = $pdo->query('SELECT postID, title, description, content, date, ratingID FROM blog_posts ORDER BY postID DESC'); //lists posts from 
         while ($row = $stmt->fetch()) {
 
             echo '<div>';
             echo '<h1><a href="viewpost.php?id=' . $row['postID'] . '">' . $row['title'] . '</a></h1>';
-            echo '<p>Posted on ' . date('jS M Y H:i:s', strtotime($row['date'])) . '</p>';
+            echo '<p>Posted on ' . date('jS M Y H:i:s', strtotime($row['date'])) .  " - Rating " .$row['ratingID'] .'</p>';
             echo '<p>' . $row['description'] . '</p>';
             echo '<p><a href="viewpost.php?id=' . $row['postID'] . '">Read More</a></p>';
             echo '</div>';
@@ -101,13 +108,13 @@ function recent_blogs($pdo) {
 function viewpost($pdo) {
 
     try {
-        $stmt = $pdo->prepare('SELECT postID, title, description, content, date FROM blog_posts WHERE postID = :postID');
+        $stmt = $pdo->prepare('SELECT postID, title, description, content, date, ratingID FROM blog_posts WHERE postID = :postID');
         $stmt->execute([':postID' => $_GET['id']]);
         $row = $stmt->fetch();
 
         echo '<div>';
         echo '<h1>' . $row['title'] . '</h1>';
-        echo '<p>Posted on ' . date('jS M Y', strtotime($row['date'])) . '</p>';
+        echo '<p>Posted on ' . date('jS M Y', strtotime($row['date'])) . " - Rating " .$row['ratingID'] .'</p>';
         echo '<p>' . $row['description'] . '</p>';
         echo '<p>' . $row['content'] . '</p>';
         echo '</div>';

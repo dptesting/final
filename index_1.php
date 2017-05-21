@@ -20,6 +20,10 @@ session_start();
             if (isset($_GET['signup'])) {
                 signup();
             }
+            echo "<br><a href = 'delete.php?delete'>Delete</a>";
+            if (isset($_GET['delete'])) {
+                delete();
+            }
             echo "<br><a href = 'blog.php?blog'>Add Blog</a>";
             if (isset($_GET['blog'])) {
                 blogs();

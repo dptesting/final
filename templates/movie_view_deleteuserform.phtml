@@ -1,0 +1,8 @@
+<form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
+
+    <p><label for="username">Username</label><br />
+        <input name="username" type="text" pattern=".{6,30}" required title="must be greater than 6 characters" placeholder="Username";/>
+
+    <p><input type="submit" name="submit" value='Delete User'></p>
+
+</form>

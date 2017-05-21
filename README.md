@@ -13,8 +13,10 @@ week3 - add the nice to haves
 week4 - test and test again
 
 
-if having more time:
-more validation (min length username, username cannot be password and lock outs and unique users/emails)
+having more time:
+lock outs and unique users/emails
+password history
+single sign on
 cross browser testing
 pen testing
 performance testing
