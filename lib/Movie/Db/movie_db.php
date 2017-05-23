@@ -42,13 +42,11 @@ function movies($pdo) {//list movies
     try {
         //insert into database
         $stmt = $pdo->query("SELECT * FROM movies");
-        //print_r($stmt);
         while ($row = $stmt->fetch()) {
             echo '<div>';
             echo '<h1><a href="viewpost.php?id=' . $row['movieID'] . '">' . $row['name'] . '</a></h1>';
-            echo '<p>' . $row['year'] . '</p>';
-            echo '<p>' . $row['certificate'] . '</p>';
-            echo '<p>' . $row['runTime'] . '</p>';
+            echo '<p> Cert' . $row['certificate'] . '      ' . $row['runTime'] . '    ' . $row['year'] . '</p>';
+            echo '<img src=" ' . $row['image'] . ' " width="400"/>';
             echo '</div>';
         }
     } catch (PDOException $e) {
@@ -95,7 +93,7 @@ function recent_blogs($pdo) {
 
             echo '<div>';
             echo '<h1><a href="viewpost.php?id=' . $row['postID'] . '">' . $row['title'] . '</a></h1>';
-            echo '<p>Posted on ' . date('jS M Y H:i:s', strtotime($row['date'])) .  " - Rating " .$row['ratingID'] .'</p>';
+            echo '<p>Posted on ' . date('jS M Y H:i:s', strtotime($row['date'])) . " - Rating " . $row['ratingID'] . '</p>';
             echo '<p>' . $row['description'] . '</p>';
             echo '<p><a href="viewpost.php?id=' . $row['postID'] . '">Read More</a></p>';
             echo '</div>';
@@ -107,6 +105,7 @@ function recent_blogs($pdo) {
 
 function viewpost($pdo) {
 
+
     try {
         $stmt = $pdo->prepare('SELECT postID, title, description, content, date, ratingID FROM blog_posts WHERE postID = :postID');
         $stmt->execute([':postID' => $_GET['id']]);
@@ -114,10 +113,11 @@ function viewpost($pdo) {
 
         echo '<div>';
         echo '<h1>' . $row['title'] . '</h1>';
-        echo '<p>Posted on ' . date('jS M Y', strtotime($row['date'])) . " - Rating " .$row['ratingID'] .'</p>';
+        echo '<p>Posted on ' . date('jS M Y', strtotime($row['date'])) . " - Rating " . $row['ratingID'] . '</p>';
         echo '<p>' . $row['description'] . '</p>';
         echo '<p>' . $row['content'] . '</p>';
         echo '</div>';
+        $_SESSION['postID'] = $row['postID'];
     } catch (PDOException $e) {
         echo $e->getMessage();
     }
@@ -125,12 +125,14 @@ function viewpost($pdo) {
 
 //Comments FUNCTIONS
 
-function addcomments($pdo, $comment, $member) {//adds a post
+function addcomments($pdo, $comment, $member, $postID) {//adds a post
+    session_start();
     try {
         //insert into database
-        $stmt = $pdo->prepare('INSERT INTO comments (comment, date, member) VALUES (:comment, :date, :member)');
-        $stmt->execute([':comment' => $comment, ':date' => date('Y-m-d H:i:s'), ':member' => $member]);
+        $stmt = $pdo->prepare('INSERT INTO comments (comment, date, member, postID) VALUES (:comment, :date, :member, :postID)');
+        $stmt->execute([':comment' => $comment, ':date' => date('Y-m-d H:i:s'), ':member' => $member, ':postID' => $postID]);
         //redirect to index page
+        $_SESSION[$postID];
         header('Location: index_1.php');
         exit;
     } catch (PDOException $e) {
@@ -138,13 +140,15 @@ function addcomments($pdo, $comment, $member) {//adds a post
     }
 }
 
-function comments($pdo) {
+function comments($pdo, $postID) {
+
     try {
-        $stmt = $pdo->query('SELECT * FROM comments ORDER BY commentID DESC'); //lists posts from 
+        $stmt = $pdo->prepare('SELECT * FROM comments WHERE postID = :postID'); //lists posts from 
+        $stmt->execute(['postID' => $postID]);
         while ($row = $stmt->fetch()) {
 
             echo '<div>';
-            echo '<p>Posted on ' . date('jS M Y H:i:s', strtotime($row['date'])) . '</p>';
+            echo '<p>Posted on ' . date('jS M Y H:i:s', strtotime($row['date'])) . '  by ' . $row['member'] . '</p>';
             echo '<p>' . $row['comment'] . '</p>';
             echo '</div>';
         }

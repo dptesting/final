@@ -1,11 +1,12 @@
 <?php
-//include 'lib/Movie/Db/movie_db.php';
-//include 'lib/Cart/Upload/cart_upload.php';
 include 'common.php';
 include 'lib/Movie/View/movie_view.php';
 include 'lib/Movie/Auth/movie_auth.php';
 
-//use function Movie\Auth\login;
+use function Movie\View\display;
+
+echo display('header');
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -24,3 +25,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     </body>
 </html>
+<?php echo display('footer'); ?>

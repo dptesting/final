@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Movies On The Train Blog</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat+Subrayada" rel="stylesheet">
+        <link rel="stylesheet" href="blog_css.css">
+
+    </head>
+    <body> 
+        <header>
+            <div class="container">
+
+                <h1 class="blog-name">Movies On The Train Blog</h1>
+            </div>
+            <div class="container nav-links">
+                <nav class = "nav-background">
+                    <?php
+                    session_start();
+                    if (!empty($_SESSION['login_user'])) {
+                        echo $_SESSION['login_user'] . " is logged in";
+                          echo "<ul>";
+                        if ($_SESSION['login_user'] == 'blog_admin') {
+
+
+
+                            echo "<ul>";
+
+                            echo "<li><a href='about.php'>About</a></li>";
+                            echo "<li><a href='delete.php?delete'>Delete Users</a></li>";
+                            echo "<li><a href='blogs.php?blog'>Add Blog</a></li>";
+                        }
+
+                        echo "<li><a href='search.php?search'>Search</a></li>";
+                        echo "<li><a href='logout.php'>Logout</a></li>";
+                        echo "<li><a href = 'signup.php?signup'>Subscribe</a></li>";
+                        echo "<li><a href='index_1.php'>Home</a></li>";
+                        echo "</ul>";
+                        echo "</nav>";
+                    } elseif
+                    (empty($_SESSION['login_user'])) {
+
+                        echo "<ul>";
+                        echo "<li><a href = 'about.php'>About</a></li>";
+                        echo "<li><a href = 'search.php'>Search</a></li>";
+                        echo "<li><a href = 'login.php'>Login</a></li>";
+                        echo "<li><a href = 'signup.php?signup'>Subscribe</a>";
+                        echo "<li><a href = 'comp.php?competition'>Competition</a>";
+                        echo "<li><a href='index.php'>Home</a></li>";
+                        echo "</ul>";
+                        echo "</nav>";
+                    }
+                    ?>
+
+            </div>
+        </header>
+
+

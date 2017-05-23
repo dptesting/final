@@ -7,7 +7,7 @@ function valid($data) {
 }
 
 function validtext($data) {
-    return preg_match('/^[a-zA-Z0-9. ]*$/', $data);
+    return preg_match('/^[a-zA-Z0-9., ]*$/', $data);
 }
 
 function test_input($data) {

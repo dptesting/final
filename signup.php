@@ -3,8 +3,11 @@ include 'common.php';
 include 'lib/Movie/View/movie_view.php';
 include 'lib/Movie/Validation/movie_validation.php';
 
+use function Movie\View\display;
 use function Movie\Validation\test_input,
              Movie\Validation\valid;
+
+echo display('header');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 //validation checks
@@ -39,6 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 ?>
 
 
+
 <!doctype html>
 <html>
     <head><title>Movie times</title></head>
@@ -46,7 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <h1>Signup</h1>
 
-<?php echo Movie\View\display('adduserform'); ?>
+        <?php echo Movie\View\display('adduserform'); ?>
 
     </body>
 </html>
+<?php echo display('footer'); ?>
