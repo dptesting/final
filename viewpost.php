@@ -18,7 +18,7 @@ $postID = ($_SESSION['postID']);
 
 
 if (!empty($_SESSION['login_user'])) {
-    echo "<br><a href = 'comments.php?comment'>Comments</a>";
+    echo "<br><button type='button'><a href = 'comments.php?comment'>Comments</a></button>";
     if (isset($_GET['comments'])) {
         addcomments();
     }

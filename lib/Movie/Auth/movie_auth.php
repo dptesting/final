@@ -20,7 +20,7 @@ function login($pdo, $username, $password) {
 
     if ($username && password_verify($password, $user['password'])) {
         $_SESSION['login_user'] = $username; // Initializing Session 
-        header('Location: index_1.php');
+        header('Location: index.php');
     } else {
         echo "Username or Password is invalid";
     }

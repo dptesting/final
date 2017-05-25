@@ -12,8 +12,6 @@ echo display('header');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    session_start();
-
     $comment = test_input($_POST['comment']);
     $member = ($_SESSION['login_user']);
     $postID = ($_SESSION['postID']);
