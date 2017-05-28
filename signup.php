@@ -47,9 +47,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html>
     <head><title>Movie times</title></head>
     <body>
-
-        <h1>Signup</h1>
-
         <?php echo Movie\View\display('adduserform'); ?>
         <?php echo display('footer'); ?>
     </body>

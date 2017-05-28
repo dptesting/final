@@ -1,16 +1,22 @@
+<style>
+    form {
+        text-align: center;
+    }
+</style>
 <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
 
+    <h4>Sign up</h4>
     <p><label for="username">Username</label><br />
-        <input name="username" type="text" pattern=".{6,30}" required title="must be greater than 6 characters" placeholder="Username";/>
+        <input name="username" type="text" pattern=".{6,30}" required title="must be greater than 6 characters"/>
+
+    <p><label for="email">Email address</label><br />
+        <input name="email" type="text" required=""/>
 
     <p><label for="password">Password</label><br />
-        <input name="password" type="password" pattern=".{6,10}" required title="must be greater than 6 characters" placeholder="Password";/>
+        <input name="password" type="password" pattern=".{6,10}" required title="must be greater than 6 characters"/>
 
     <p><label for="passwordConfirm">Confirm Password</label><br />
         <input name="passwordConfirm" type="password" required=""/>
-
-    <p><label for="email">Email</label><br />
-        <input name="email" type="text" required="" placeholder="Email@example.com";/>
 
     <p><input type="submit" name="submit" value='Add User'></p>
 

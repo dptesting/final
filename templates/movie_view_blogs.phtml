@@ -1,21 +1,30 @@
+<style>
+    form {
+        text-align: center;
+    }
+</style>
 <form action="" method="post">
 
+    <h4>Add Blogs</h4>
     <p><label>Title</label><br />
         <input type="text" name="title" required=""/></p>
 
+
     <p><label>Movie</label><br />
-        <input type="checkbox" name="movieID" value="1" />The Godfather</br>
-        <input type="checkbox" name="movieID" value="2" />Shawshank Redemption</br>
-        <input type="checkbox" name="movieID" value="3" />Jaws</br>
+        <select name="movieID">
+            <option value="1" />The Godfather</option>
+            <option value="2" />Shawshank Redemption</option>
+            <option value="3" />Jaws</option>
+        </select>
 
     <p><label>Rating</label><br />
         <input type="text" name="ratingID" required=""/></p>
 
     <p><label>Description</label><br />
-        <textarea name="description" cols="60" rows="10" required=""/></textarea></p>
+        <textarea name="description" cols="60" rows="4" required=""/></textarea></p>
 
     <p><label>Content</label><br />
-        <textarea name="content" cols="60" rows="10" required=""/></textarea></p>
+        <textarea name="content" cols="60" rows="4" required=""/></textarea></p>
 
     <p><input type="submit" name="submit" value="Submit" required=""></p>
 

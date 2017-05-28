@@ -20,11 +20,11 @@ echo display('header');
 
     foreach ($movies as $movie) {
 
-      /*  echo '<div>';
-        if (empty('viewpost.php?id=' . $movie->id)) {
-            echo "Please add a blog";
-        } else
-            echo "Only 1 blog for movie";*/
+        /*  echo '<div>';
+          if (empty('viewpost.php?id=' . $movie->id)) {
+          echo "Please add a blog";
+          } else
+          echo "Only 1 blog for movie"; */
         echo '<h1><a href="viewpost.php?id=' . $movie->id . '">' . $movie->name . ''
         . '</a></h1>';
         echo '<p> Cert' . $movie->certificate . '      ' . $movie->runTime . '    ' . $movie->year . '</p>';

@@ -36,9 +36,6 @@ echo display('header');
 
     <head><title>Movie times</title></head>
     <body>
-
-        <h1>Add Movie</h1>
-
         <?php echo Movie\View\display('movie'); ?>
         <?php echo display('footer'); ?>
     </body>

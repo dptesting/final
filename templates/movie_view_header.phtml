@@ -36,7 +36,7 @@
                         echo "<li style='color:red'; class='nav-links'>" . $_SESSION['login_user'] . " is logged in</style></a></li>";
                         echo "</ul>";
                         echo "<ul class='nav navbar-nav navbar-right'>";
-                        echo "<li class='nav-links'><a href='logout.php'><span class='glyphicon glyphicon-log-in'></span> Logout</a></li>";
+                        echo "<li class='nav-links'><a href='logout.php'><span class='glyphicon glyphicon-log-in'></span> Sign out</a></li>";
                         echo "</ul>";
                         echo "</div>";
                     } elseif
@@ -44,9 +44,10 @@
                         echo "<li class='nav-links'><a href='index.php'>Home</a></li>";
                         echo "<li class='nav-links'><a href='about.php'>About</a></li>";
                         echo "<li class='nav-links'><a href='search.php?search'>Search</a></li>";
+                        echo "<li class='nav-links'><a href='signup.php'>Sign up</a></li>";
                         echo "</ul>";
                         echo "<ul class='nav navbar-nav navbar-right'>";
-                        echo "<li class='nav-links'><a href='login.php'><span class='glyphicon glyphicon-log-in'></span> Login</a></li>";
+                        echo "<li class='nav-links'><a href='login.php'><span class='glyphicon glyphicon-log-in'></span> Sign in</a></li>";
                         echo "</ul>";
                         echo "</div>";
                     }
