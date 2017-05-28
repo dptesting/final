@@ -1,3 +1,11 @@
+<?php
+include 'common.php';
+include 'lib/Movie/View/movie_view.php';
+
+use function Movie\View\display;
+
+echo display('header');
+?>
 <!doctype html>
 <html>
     <head><title>Competition times</title></head>
@@ -11,10 +19,7 @@
         if (isset($_GET['login'])) {
             login();
         }
-        echo "<br><a href = 'signup.php?signup'>Signup</a>";
-        if (isset($_GET['signup'])) {
-            signup();
-        }
+        echo display('footer');
         ?>
 
     </body>

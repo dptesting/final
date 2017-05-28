@@ -5,8 +5,7 @@ include 'lib/Movie/Validation/movie_validation.php';
 
 use function Movie\Validation\test_input;
 use function Movie\Validation\validtext;
-
-        use function Movie\View\display;
+use function Movie\View\display;
 
 echo display('header');
 
@@ -25,7 +24,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
     Movie\Db\addcomments($pdo, $comment, $member, $postID);
-    
 }
 ?>
 
@@ -37,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <h1>Comments</h1>
 
         <?php echo Movie\View\display('comments'); ?>
-
+        <?php echo display('footer'); ?>
     </body>
 </html>
-<?php echo display('footer'); ?>

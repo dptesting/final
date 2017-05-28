@@ -8,54 +8,52 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Montserrat+Subrayada" rel="stylesheet">
         <link rel="stylesheet" href="blog_css.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     </head>
     <body> 
         <header>
-            <div class="container">
+            <div class="container container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand blog-name">Movies On The Train Blog</a>
+                </div>
 
-                <h1 class="blog-name">Movies On The Train Blog</h1>
-            </div>
-            <div class="container nav-links">
-                <nav class = "nav-background">
+                <ul class="nav navbar-nav">
                     <?php
                     session_start();
                     if (!empty($_SESSION['login_user'])) {
-                        echo $_SESSION['login_user'] . " is logged in";
-                          echo "<ul>";
+
+                        //  echo "<ul>";
                         if ($_SESSION['login_user'] == 'blog_admin') {
-
-
-
-                            echo "<ul>";
-
-                            echo "<li><a href='about.php'>About</a></li>";
-                            echo "<li><a href='delete.php?delete'>Delete Users</a></li>";
-                            echo "<li><a href='blogs.php?blog'>Add Blog</a></li>";
+                            echo "<li class='nav-links'><a href='movie.php'>Add Movie</a></li>";
+                            echo "<li class='nav-links'><a href='blogs.php?blog'>Add Blog</a></li>";
+                            echo "<li class='nav-links'><a href='delete.php?delete'>Delete User</a></li>";
                         }
-
-                        echo "<li><a href='search.php?search'>Search</a></li>";
-                        echo "<li><a href='logout.php'>Logout</a></li>";
-                        echo "<li><a href = 'signup.php?signup'>Subscribe</a></li>";
-                        echo "<li><a href='index_1.php'>Home</a></li>";
+                        echo "<li class='nav-links'><a href='index.php'>Home</a></li>";
+                        echo "<li class='nav-links'><a href='about.php'>About</a></li>";
+                        echo "<li class='nav-links'><a href='search.php?search'>Search</a></li>";
+                        echo "<li class='nav-links'><a href='comp.php?competition'>Competition</a></li>";
+                        echo "<li style='color:red'; class='nav-links'>" . $_SESSION['login_user'] . " is logged in</style></a></li>";
                         echo "</ul>";
-                        echo "</nav>";
+                        echo "<ul class='nav navbar-nav navbar-right'>";
+                        echo "<li class='nav-links'><a href='logout.php'><span class='glyphicon glyphicon-log-in'></span> Logout</a></li>";
+                        echo "</ul>";
+                        echo "</div>";
                     } elseif
                     (empty($_SESSION['login_user'])) {
-
-                        echo "<ul>";
-                        echo "<li><a href = 'about.php'>About</a></li>";
-                        echo "<li><a href = 'search.php'>Search</a></li>";
-                        echo "<li><a href = 'login.php'>Login</a></li>";
-                        echo "<li><a href = 'signup.php?signup'>Subscribe</a>";
-                        echo "<li><a href = 'comp.php?competition'>Competition</a>";
-                        echo "<li><a href='index.php'>Home</a></li>";
+                        echo "<li class='nav-links'><a href='index.php'>Home</a></li>";
+                        echo "<li class='nav-links'><a href='about.php'>About</a></li>";
+                        echo "<li class='nav-links'><a href='search.php?search'>Search</a></li>";
                         echo "</ul>";
-                        echo "</nav>";
+                        echo "<ul class='nav navbar-nav navbar-right'>";
+                        echo "<li class='nav-links'><a href='login.php'><span class='glyphicon glyphicon-log-in'></span> Login</a></li>";
+                        echo "</ul>";
+                        echo "</div>";
                     }
                     ?>
 
-            </div>
-        </header>
+
+
+                    </header>
 
 

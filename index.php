@@ -1,36 +1,39 @@
-<!DOCTYPE html>
+<?php
+include 'common.php'; //connecting to the database
+include 'lib/Movie/Db/MovieClass.php';
 
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Movie Reviews</title>
-    </head>
-    <body>
+include 'lib/Movie/View/movie_view.php';
 
-        <?php
-        include 'common.php'; //connecting to the database
-        include 'lib/Movie/View/movie_view.php';
-
-        use function Movie\View\display;
+use function Movie\View\display;
 
 echo display('header');
-        ?>
-        <div class="banner-container">
+?>
+<div class="container container-featured">
+    <img src="https://usercontent2.hubstatic.com/13534699.jpg" alt="Alien 2017"/> 
+</div>
 
-            <figure>
-                <img src="https://usercontent2.hubstatic.com/13534699.jpg" alt="Alien 2017"/>
-                <figcaption>BANNER IMAGE PLACEHOLDER</figcaption>
-            </figure>
+<div class="container container-body">
+    <?php
+    \Movie\Db\getMovies($pdo);
 
-        </div>
+    $movies = \Movie\Db\getMovies($pdo);
 
-        <div class="container">
-            <?php
-            \Movie\Db\movies($pdo);
-            \Movie\Db\recent_blogs($pdo);
+    foreach ($movies as $movie) {
 
-            echo display('footer');
-            ?>
-        </div>
-    </body>
-</html>
+      /*  echo '<div>';
+        if (empty('viewpost.php?id=' . $movie->id)) {
+            echo "Please add a blog";
+        } else
+            echo "Only 1 blog for movie";*/
+        echo '<h1><a href="viewpost.php?id=' . $movie->id . '">' . $movie->name . ''
+        . '</a></h1>';
+        echo '<p> Cert' . $movie->certificate . '      ' . $movie->runTime . '    ' . $movie->year . '</p>';
+        echo '<img src=" ' . $movie->image . ' " width="400"/>';
+        echo '</div>';
+    }
+
+    \Movie\Db\recent_blogs($pdo);
+    ?>
+</div>
+
+<?php echo display('footer'); ?>

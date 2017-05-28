@@ -13,11 +13,10 @@ const DB_PASS = '';
 try {
     $pdo = new PDO(DB_DSN, DB_USER, DB_PASS);
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
 } catch (PDOException $e) {
     die($e->getMessage());
 }
 set_error_handler(function ($errorType, $errorMessage) {
-   // echo "there's a problem";
-   echo \Movie\View\display('error', ['message' => $errorMessage]);
+    // echo "there's a problem";
+    echo \Movie\View\display('error', ['message' => $errorMessage]);
 });

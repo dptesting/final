@@ -51,7 +51,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <h1>Signup</h1>
 
         <?php echo Movie\View\display('adduserform'); ?>
-
+        <?php echo display('footer'); ?>
     </body>
 </html>
-<?php echo display('footer'); ?>

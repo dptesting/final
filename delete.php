@@ -1,11 +1,10 @@
 <?php
-//include 'lib/Movie/Db/movie_db.php';
-//include 'lib/Cart/Upload/cart_upload.php';
 include 'common.php';
 include 'lib/Movie/View/movie_view.php';
-//include 'lib/Movie/Db/movie_db.php';
 
-//use function Movie\Auth\login;
+use function Movie\View\display;
+
+echo display('header');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -20,7 +19,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         <h1>You sure you want to delete a user?</h1>
 
-        <?php echo Movie\View\display('deleteuserform'); ?>
+        <?php
+        echo Movie\View\display('deleteuserform');
+        echo display('footer');
+        ?>
 
     </body>
 </html>
