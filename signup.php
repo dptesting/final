@@ -36,8 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "username and password cannot be the same";
         die();
     }
-
-    Movie\Db\signup($pdo, $name, $password, $email);
+    $role = ($_POST['roleID']);
+    //print_r($role);
+   Movie\Db\signup($pdo, $name, $password, $email, $role);
 }
 ?>
 
