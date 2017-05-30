@@ -14,9 +14,9 @@ week4 - test and test again
 
 
 having more time:
-lock outs and unique users/emails
+lock outs
+verify emails
 password history
-single sign on
 cross browser testing
 pen testing
 performance testing

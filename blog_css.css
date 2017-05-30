@@ -11,7 +11,10 @@ body {
 }
 
 h1 {
-    font-family: 'Helvetiva', sans-serif;
+  font-family: 'Helvetiva', sans-serif;
+  padding-top: 0;
+  padding-bottom: 10px;
+  font-size: 20px;
 }
 
 .blog-name {
@@ -38,6 +41,11 @@ h1 {
 
 .container-body {
     padding-bottom: 100px;
+}
+
+.container-recent {
+    padding-top: 20px;
+    padding-bottom: 20px
 }
 
 body a {
@@ -78,7 +86,18 @@ body a:hover {
 
 img {
     max-width: 100%;
+    padding-bottom: 10px;
 }
+
+
+.recentblog-title {
+    margin-top: 0;
+}
+.recentblog-image {
+    float: left;
+    padding-right: 10px;
+}
+
 
 .footer-container {
     position: absolute;
@@ -129,4 +148,9 @@ img {
 
 .fa {
     padding-right: 20px;    
+}
+
+.video-wrapper {
+    display: block;
+    text-align: center;
 }
