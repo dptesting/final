@@ -17,19 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $movieID = test_input($_POST['movieID']);
     $ratingID = test_input($_POST['ratingID']);
 
-
-
-    if (!validtext($desc)) {
-        echo "Only letters and numbers allowed"; //need to include spaces
-        die();
-    }
-
-    if (!validtext($content)) {
-        echo "Only letters and numbers allowed"; //need to include spaces
-        die();
-    }
-
-    Movie\Db\blogs($pdo, $title, $desc, $content, $_POST['date'], $movie, $rating);
+    Movie\Db\blogs($pdo, $title, $desc, $content, $movieID, $ratingID);
 }
 ?>
 

@@ -1,4 +1,5 @@
 <?php
+
 include 'common.php';
 include 'lib/Movie/View/movie_view.php';
 include 'lib/Movie/Validation/movie_validation.php';
@@ -8,6 +9,7 @@ use function Movie\Validation\validtext;
 use function Movie\View\display;
 
 echo display('header');
+echo display('footer');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -17,21 +19,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 
-    if (!validtext($comment)) {
-        echo "Only letters and numbers allowed"; //need to include spaces
-        die();
-    }
+
 
 
     Movie\Db\addcomments($pdo, $comment, $member, $postID);
 }
+
+echo Movie\View\display('comments');
 ?>
 
-<!doctype html>
-<html>
-    <head><title>Movie times</title></head>
-    <body>
-        <?php echo Movie\View\display('comments'); ?>
-        <?php echo display('footer'); ?>
-    </body>
-</html>
+
+

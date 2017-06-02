@@ -2,44 +2,78 @@
 
 namespace Movie\Db;
 
+use function Movie\Validation\valid,
+             Movie\Validation\validtext;
+
 //USER FUNCTIONS
 function create_hash($password) {
     $salt = rand(0, 1000);
     return $hash = crypt($password, $salt);
 }
 
-function signup($pdo, $username, $password, $email, $role) {
+function signup($pdo, $username, $password, $passwordConfirm, $email, $role) {
+
+    echo "<div style='text-align:center'>";
+    if (!valid($username)) {
+        echo "Only letters and numbers allowed";
+        return;
+    }
+
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo "Invalid email format";
+        return;
+    }
+
+    if ($password !== $passwordConfirm) {
+        echo "confirmation password does not match";
+        return;
+    }
+
+    if ($password == $username) {
+        echo "username and password cannot be the same";
+        return;
+    }
+    echo "</div>";
 
     $hashedpassword = create_hash($password);
 
     $user = read_user($pdo, $username, $password);
 
 
-    if (empty($user['username'])) {
-//insert into database
+    if (empty($user->username)) {// adds unique username
         $stmt = $pdo->prepare('INSERT INTO blog_members (username,password,email,roleID) VALUES (:username, :password, :email, :roleID)');
         $stmt->execute([':username' => $username, ':password' => $hashedpassword, ':email' => $email, ':roleID' => $role]);
-//redirect to index page
         $_SESSION['roleID'] = $role;
         $_SESSION['login_user'] = $username;
 
+
         header('Location: index.php');
     } else {
+        echo "<div style='text-align:center'>";
         echo 'This user already exists';
+        echo "</div>";
     }
 }
 
+function read_user($pdo, $username) {//selects a user
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM blog_members WHERE username = :username");
+        $stmt->execute(['username' => $username]);
+
+        // return $stmt->fetch();
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
+    $row = $stmt->fetch();
+
+    $myUser = new \User($row['memberID'], $row['username'], $row['password'], $row['email'], $row['roleID']);
+    return $myUser;
+}
+
 function delete_user($pdo, $username) {//deletes a user
-    print_r($username);
     $stmt = $pdo->prepare("DELETE FROM blog_members WHERE username = :username");
     $stmt->execute([':username' => $username]);
     header('Location: index.php');
-}
-
-function read_user($pdo, $username) {//selects a user
-    $stmt = $pdo->prepare("SELECT * FROM blog_members WHERE username = :username");
-    $stmt->execute(['username' => $username]);
-    return $stmt->fetch();
 }
 
 //MOVIE FUNCTIONS
@@ -65,7 +99,7 @@ function getMovies($pdo) {   //Lists all the movies in the database
         $stmt = $pdo->query("SELECT * FROM movies");
     } catch (PDOException $e) {
         echo $e->getMessage();
-        $error = $e->errorInfo();   //          check error
+        $error = $e->errorInfo();   //check error
         die();
     }
     $stmt->execute();
@@ -98,11 +132,20 @@ function viewcategory($pdo) {
 //BLOG FUNCTIONS
 
 function blogs($pdo, $title, $desc, $content, $movieID, $ratingID) {//adds a post
+    echo "<div style='text-align:center'>";
+    if (!validtext($desc)) {
+        echo "Only letters and numbers allowed"; //need to include spaces
+        return;
+    }
+
+    if (!validtext($content)) {
+        echo "Only letters and numbers allowed"; //need to include spaces
+        return;
+    }
+    echo "</div>";
     try {
-//insert into database
         $stmt = $pdo->prepare('INSERT INTO blog_posts (title,description,content,date,movieID,ratingID) VALUES (:title, :description, :content, :date, :movieID, :ratingID)');
         $stmt->execute([':title' => $title, ':description' => $desc, ':content' => $content, ':date' => date('Y-m-d H:i:s'), ':movieID' => $movieID, ':ratingID' => $ratingID]);
-//redirect to index page
         header('Location: index.php');
         exit;
     } catch (PDOException $e) {
@@ -153,14 +196,14 @@ function viewpost($pdo) {
 
     try {
         $stmt = $pdo->prepare // changed the select statement so it displays image and video for each post
-        ('SELECT postID, title, description, content, date, ratingID, blog_posts.movieID, movies.movieID, movies.image, movies.video FROM blog_posts, movies WHERE postID = :postID AND blog_posts.movieID = movies.movieID');
+                ('SELECT postID, title, description, content, date, ratingID, blog_posts.movieID, movies.movieID, movies.image, movies.video FROM blog_posts, movies WHERE postID = :postID AND blog_posts.movieID = movies.movieID');
         $stmt->execute([':postID' => $_GET['id']]);
         $row = $stmt->fetch();
         $video = '<span class="video-wrapper"><iframe width="560" height="315" src="' . $row['video'] . '" frameborder="0" allowfullscreen></iframe></span>';
 
         echo '<h1>' . $row['title'] . '</h1>';
         echo '<p>Posted on ' . date('jS M Y', strtotime($row['date'])) . " - Rating " . $row['ratingID'] . '</p>';
-        echo '<img src=" '. $row['image'] . ' " width="400"/>';
+        echo '<img src=" ' . $row['image'] . ' " width="400"/>';
         $test = str_replace('{{video}}', $video, $row['content']);
         echo '<p>' . $row['description'] . '</p>';
         echo '<p>' . $test . '</p>';
@@ -173,11 +216,14 @@ function viewpost($pdo) {
 //Comments FUNCTIONS
 
 function addcomments($pdo, $comment, $member, $postID) {//adds a post
+    echo "<div style='text-align:center'>";
+    if (!validtext($comment)) {
+        echo "Only letters and numbers allowed"; //need to include spaces
+        return;
+    }
     try {
-//insert into database
         $stmt = $pdo->prepare('INSERT INTO comments (comment, date, member, postID) VALUES (:comment, :date, :member, :postID)');
         $stmt->execute([':comment' => $comment, ':date' => date('Y-m-d H:i:s'), ':member' => $member, ':postID' => $postID]);
-//redirect to index page
         $_SESSION[$postID];
         header('Location: index.php');
         exit;
@@ -185,7 +231,6 @@ function addcomments($pdo, $comment, $member, $postID) {//adds a post
         echo $e->getMessage();
     }
 }
-
 
 function comments($pdo, $postID) {   //Lists all the comments against a selected post in the database
     $commentArray = [];

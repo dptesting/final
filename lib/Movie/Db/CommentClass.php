@@ -10,6 +10,7 @@
  * Description of CommentClass
  */
 class Comment {
+
     public $id;
     public $comment;
     public $date;

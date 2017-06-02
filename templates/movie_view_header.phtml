@@ -9,7 +9,8 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat+Subrayada" rel="stylesheet">
         <link rel="stylesheet" href="blog_css.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+        <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </head>
     <body> 
         <header>
@@ -23,17 +24,16 @@
                     session_start();
                     if (!empty($_SESSION['login_user'])) {
 
-                        //  echo "<ul>";
                         if ($_SESSION['roleID'] == '1') {
                             echo "<li class='nav-links'><a href='movie.php'>Add Movie</a></li>";
                             echo "<li class='nav-links'><a href='blogs.php?blog'>Add Blog</a></li>";
                             echo "<li class='nav-links'><a href='delete.php?delete'>Delete User</a></li>";
                         }
                         echo "<li class='nav-links'><a href='index.php'>Home</a></li>";
-                        echo "<li class='nav-links'><a href='about_page.html'>About</a></li>";
+                        echo "<li class='nav-links'><a href='about_page.php'>About</a></li>";
                         echo "<li class='nav-links'><a href='search.php?search'>Search</a></li>";
                         echo "<li class='nav-links'><a href='comp.php?competition'>Competition</a></li>";
-                        echo "<li style='color:red'; class='nav-links'>" . $_SESSION['login_user'] . " is logged in</style></a></li>";
+                        echo "<li style='color:red;text-transform: capitalize;' class='nav-links'>" . "May the Force be with you " . $_SESSION['login_user'] . " </style></a></li>";
                         echo "</ul>";
                         echo "<ul class='nav navbar-nav navbar-right'>";
                         echo "<li class='nav-links'><a href='logout.php'><span class='glyphicon glyphicon-log-in'></span> Sign out</a></li>";
@@ -42,9 +42,8 @@
                     } elseif
                     (empty($_SESSION['login_user'])) {
                         echo "<li class='nav-links'><a href='index.php'>Home</a></li>";
-                        echo "<li class='nav-links'><a href='about_page.html'>About</a></li>";
+                        echo "<li class='nav-links'><a href='about_page.php'>About</a></li>";
                         echo "<li class='nav-links'><a href='search.php?search'>Search</a></li>";
-                       // echo "<li class='nav-links'><a href='signup.php'>Sign up</a></li>";
                         echo "</ul>";
                         echo "<ul class='nav navbar-nav navbar-right'>";
                         echo "<li class='nav-links'><a href='signup.php'><span class='glyphicon glyphicon-log-in'></span> Sign up</a></li>";
@@ -53,8 +52,6 @@
                         echo "</div>";
                     }
                     ?>
-
-
 
                     </header>
 
