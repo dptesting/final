@@ -38,14 +38,14 @@ function signup($pdo, $username, $password, $passwordConfirm, $email, $role) {
     $hashedpassword = create_hash($password);
 
     $user = read_user($pdo, $username, $password);
+    $email = read_email($pdo, $email);
 
 
-    if (empty($user->username)) {// adds unique username
+    if ((empty($user->username) && (empty($email->email)))) {//checks unique username and unique email
         $stmt = $pdo->prepare('INSERT INTO blog_members (username,password,email,roleID) VALUES (:username, :password, :email, :roleID)');
         $stmt->execute([':username' => $username, ':password' => $hashedpassword, ':email' => $email, ':roleID' => $role]);
         $_SESSION['roleID'] = $role;
         $_SESSION['login_user'] = $username;
-
 
         header('Location: index.php');
     } else {
@@ -60,7 +60,20 @@ function read_user($pdo, $username) {//selects a user
         $stmt = $pdo->prepare("SELECT * FROM blog_members WHERE username = :username");
         $stmt->execute(['username' => $username]);
 
-        // return $stmt->fetch();
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
+    $row = $stmt->fetch();
+
+    $myUser = new \User($row['memberID'], $row['username'], $row['password'], $row['email'], $row['roleID']);
+    return $myUser;
+}
+
+function read_email($pdo, $email) {//selects a user
+    try {
+        $stmt = $pdo->prepare("SELECT * FROM blog_members WHERE email = :email");
+        $stmt->execute(['email' => $email]);
+
     } catch (PDOException $e) {
         echo $e->getMessage();
     }
@@ -224,8 +237,8 @@ function addcomments($pdo, $comment, $member, $postID) {//adds a post
     try {
         $stmt = $pdo->prepare('INSERT INTO comments (comment, date, member, postID) VALUES (:comment, :date, :member, :postID)');
         $stmt->execute([':comment' => $comment, ':date' => date('Y-m-d H:i:s'), ':member' => $member, ':postID' => $postID]);
-        $_SESSION[$postID];
-        header('Location: index.php');
+
+        header('Location: viewpost.php?id=' . $postID);
         exit;
     } catch (PDOException $e) {
         echo $e->getMessage();

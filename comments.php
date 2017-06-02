@@ -18,10 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $postID = ($_SESSION['postID']);
 
 
-
-
-
-
     Movie\Db\addcomments($pdo, $comment, $member, $postID);
 }
 

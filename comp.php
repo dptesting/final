@@ -21,19 +21,13 @@ echo display('header');
     </script>
 
     <body>
+        <div class="container container-body" style="border-style: solid">
+            <h4>Competition time again</h4>
+            <p>Every month our members get a chance to win a pair of premier cinema tickets and a voucher for popcorn and drinks.<br>
+                Just email us for your chance to win</p>
 
-        <h4>Competition time again</h4>
-        <p>Every month our members get a chance to win a pair of premier cinema tickets and a voucher for popcorn and drinks.<br>
-            Enter your email for your chance to win</p>
-
-        <form action="" method="post">
-            <div>
-                <label for="email"></label>
-                <input name="email" type="email" placeholder="email address"/>
-                <button type="submit" onclick='submitForm()'>submit</button>
-            </div>
-        </form>
-        <?php echo display('footer'); ?>
-
+            <a href="mailto:info@thetrainteam.com">info@thetrainteam.com</p></a>
+            <?php echo display('footer'); ?>
+        </div>
     </body>
 </html>
