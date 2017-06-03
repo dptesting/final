@@ -16,6 +16,7 @@ week4 - test and test again
 having more time:
 lock outs
 verify emails
+unit testing
 password history
 cross browser testing
 pen testing

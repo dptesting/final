@@ -9,7 +9,13 @@ echo display('header');
 ?>
 
 <div class="container">
-    <?php viewcategory($pdo); ?>
+    <?php
+    viewcategory($pdo);
+
+    \Movie\Db\viewcategory_posts($pdo);
+    ;
+    ?>
+
 </div>
 
 <?php echo display('footer'); ?>

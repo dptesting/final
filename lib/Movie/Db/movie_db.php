@@ -59,7 +59,6 @@ function read_user($pdo, $username) {//selects a user
     try {
         $stmt = $pdo->prepare("SELECT * FROM blog_members WHERE username = :username");
         $stmt->execute(['username' => $username]);
-
     } catch (PDOException $e) {
         echo $e->getMessage();
     }
@@ -73,7 +72,6 @@ function read_email($pdo, $email) {//selects a user
     try {
         $stmt = $pdo->prepare("SELECT * FROM blog_members WHERE email = :email");
         $stmt->execute(['email' => $email]);
-
     } catch (PDOException $e) {
         echo $e->getMessage();
     }
@@ -123,23 +121,6 @@ function getMovies($pdo) {   //Lists all the movies in the database
         array_push($movieArray, $myMovie);
     }
     return $movieArray;
-}
-
-function viewcategory($pdo) {
-
-    try {
-        $stmt = $pdo->query('SELECT * FROM category');
-        $stmt->execute([':catID' => $_GET['catID']]);
-
-        while ($row = $stmt->fetch()) {
-
-            echo '<div>';
-            echo '<p>' . $row['name'] . '</h1>';
-            echo '</div>';
-        }
-    } catch (PDOException $e) {
-        echo $e->getMessage();
-    }
 }
 
 //BLOG FUNCTIONS
@@ -223,6 +204,46 @@ function viewpost($pdo) {
         $_SESSION['postID'] = $row['postID'];
     } catch (PDOException $e) {
         echo $e->getMessage();
+    }
+}
+
+// CATEGORY FUNCTIONS
+
+function viewcategory($pdo) {
+    try {
+        $stmt = $pdo->query('SELECT * FROM category');
+        while ($row = $stmt->fetch()) {
+            echo " <ul class='nav navbar-nav' >";
+            echo '<li ><a href="viewcategory.php?id=' . $row['catID'] . '">' . $row['name'] . '</a></li>';
+            echo "</ul>";
+        }
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
+}
+
+function viewcategory_posts($pdo) {
+
+    try {
+        $stmt = $pdo->prepare('SELECT * FROM blog_posts JOIN (movie_categories join category USING (catID)) USING (movieID) WHERE (catID) = :catID');
+        $stmt->execute([':catID' => $_GET['id']]);
+    } catch (PDOException $e) {
+        echo $e->getMessage();
+    }
+
+    while ($row = $stmt->fetch()) {
+        echo "<div class='container container-body' style='border-style: solid'>";
+        if ($_GET['id'] == $row['catID']) {
+
+            echo '<h1><a href="viewpost.php?id=' . $row['postID'] . '">' . $row['title'] . '</a></h1>';
+            //  echo '<img class="recentblog-image src=" ' . $row['image'] . ' " width="400"/>';
+            echo '<p>Posted on ' . date('jS M Y H:i:s', strtotime($row['date'])) . " - Rating " . $row['ratingID'] . '</p>';
+            echo '<p>' . $row['description'] . '</p>';
+            echo '<p><a href="viewpost.php?id=' . $row['postID'] . '">Read More</a></p>';
+        } else {
+            echo "No posts in this category";
+        }
+        echo "</div>";
     }
 }
 

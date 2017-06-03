@@ -33,6 +33,7 @@
                         echo "<li class='nav-links'><a href='about_page.php'>About</a></li>";
                         echo "<li class='nav-links'><a href='search.php?search'>Search</a></li>";
                         echo "<li class='nav-links'><a href='comp.php?competition'>Competition</a></li>";
+                        echo "<li class='nav-links'><a href='viewcategory.php?id'>Categories</a></li>";
                         echo "<li style='color:red;text-transform: capitalize;' class='nav-links'>" . "May the Force be with you " . $_SESSION['login_user'] . " </style></a></li>";
                         echo "</ul>";
                         echo "<ul class='nav navbar-nav navbar-right'>";
@@ -43,6 +44,7 @@
                     (empty($_SESSION['login_user'])) {
                         echo "<li class='nav-links'><a href='index.php'>Home</a></li>";
                         echo "<li class='nav-links'><a href='about_page.php'>About</a></li>";
+                        echo "<li class='nav-links'><a href='viewcategory.php?id'>Categories</a></li>";
                         echo "<li class='nav-links'><a href='search.php?search'>Search</a></li>";
                         echo "</ul>";
                         echo "<ul class='nav navbar-nav navbar-right'>";
