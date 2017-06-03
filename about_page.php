@@ -8,14 +8,16 @@ use function Movie\View\display;
 
 echo display('header');
 ?>
-<body>
     <style>
         div {
             text-align: center;
         }
     </style>
+<body>
+
 
     <div class="container container-body" style="border-style: solid">
+
 
         <p></br></br>
         <p>We are passionate about movies and if you are too - we’d love to hear from you!</p></br>
@@ -25,10 +27,6 @@ echo display('header');
     <p>And we’d love your support on social media too.</p>
 
 </div>
-
-</footer>
-<script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
-<script src='js/main.js'></script>
 </body>
-</html>
+
 <?php echo display('footer'); ?>

@@ -7,8 +7,8 @@ use function Movie\Db\viewcategory;
 
 echo display('header');
 ?>
+<div class="container container-body">
 
-<div class="container">
     <?php
     viewcategory($pdo);
 

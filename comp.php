@@ -27,7 +27,7 @@ echo display('header');
                 Just email us for your chance to win</p>
 
             <a href="mailto:info@thetrainteam.com">info@thetrainteam.com</p></a>
-            <?php echo display('footer'); ?>
+
         </div>
     </body>
-</html>
+                <?php echo display('footer'); ?>

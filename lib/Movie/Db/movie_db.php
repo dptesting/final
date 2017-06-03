@@ -102,7 +102,6 @@ function addMovie($pdo, $name, $year, $certificate, $runTime, $image, $video) {/
     }
 }
 
-
 function getMovies($pdo) {   //Lists all the movies in the database
     $movieArray = [];
 
@@ -162,6 +161,8 @@ function search($pdo, $name) {//search for movie & connected blog with the name 
     try {
         $stmt = $pdo->query("SELECT * FROM blog_posts b, movies m WHERE b.movieID = m.movieID and m.name LIKE '%$name%'"); //lists posts from search
         while ($row = $stmt->fetch()) {
+                        echo "<div class='container container-body' style='border-style: groove'>";
+            echo '<div class="container container-recent">';
             echo '<div>';
             echo '<h1><a href="viewpost.php?id=' . $row['movieID'] . '">' . $row['name'] . '</a></h1>';
             echo '<p> Cert' . $row['certificate'] . '      ' . $row['runTime'] . '    ' . $row['year'] . '</p>';
@@ -173,6 +174,8 @@ function search($pdo, $name) {//search for movie & connected blog with the name 
             echo '<p>' . $row['description'] . '</p>';
             echo '<p><a href="viewpost.php?id=' . $row['postID'] . '">Read More</a></p>';
             echo '</div>';
+            echo '</div>';
+            echo '</div>';
         }
     } catch (PDOException $e) {
         echo $e->getMessage();
@@ -183,7 +186,6 @@ function recent_blogs($pdo) {
     try {
         $stmt = $pdo->query('SELECT postID, title, description, content, date, ratingID, blog_posts.movieID, movies.image, movies.movieID FROM blog_posts, movies WHERE movies.movieID = blog_posts.movieID ORDER BY postID DESC'); //lists posts from 
         while ($row = $stmt->fetch()) {
-            //   echo "<p class='scroll'>";
             echo "<div class='container container-body' style='border-style: groove'>";
             echo '<div class="container container-recent">';
             echo '<img class="recentblog-image" src=" ' . $row['image'] . ' " width="400" , height="400"/>';
@@ -193,7 +195,6 @@ function recent_blogs($pdo) {
             echo '<p><a href="viewpost.php?id=' . $row['postID'] . '">Read More</a></p>';
             echo '</div>';
             echo "</div>";
-            // echo "</p>";
         }
     } catch (PDOException $e) {
         echo $e->getMessage();
@@ -209,7 +210,8 @@ function viewpost($pdo) {
         $stmt->execute([':postID' => $_GET['id']]);
         $row = $stmt->fetch();
         $video = '<span class="video-wrapper"><iframe width="560" height="315" src="' . $row['video'] . '" frameborder="0" allowfullscreen></iframe></span>';
-
+            echo "<div class='container container-body' style='border-style: groove'>";
+            echo '<div class="container container-recent">';
         echo '<h1>' . $row['title'] . '</h1>';
         echo '<p>Posted on ' . date('jS M Y', strtotime($row['date'])) . " - Rating " . $row['ratingID'] . '</p>';
         echo '<img src=" ' . $row['image'] . ' " width="400"/>';
@@ -220,6 +222,8 @@ function viewpost($pdo) {
     } catch (PDOException $e) {
         echo $e->getMessage();
     }
+    echo "</div>";
+    echo "</div>";
 }
 
 // CATEGORY FUNCTIONS
@@ -240,24 +244,27 @@ function viewcategory($pdo) {
 function viewcategory_posts($pdo) {
 
     try {
-        $stmt = $pdo->prepare('SELECT * FROM blog_posts JOIN (movie_categories join category USING (catID)) USING (movieID) WHERE (catID) = :catID');
+        $stmt = $pdo->prepare('SELECT movies.movieID, movies.name, movies.image, movies.certificate, movies.year, blog_posts.postID, blog_posts.movieID, blog_posts.title, blog_posts.description, blog_posts.date, blog_posts.ratingID, movie_categories.movieID, movie_categories.catID, category.catID FROM blog_posts JOIN movies on movies.movieID = blog_posts.movieID JOIN movie_categories on movie_categories.movieID = movies.movieID JOIN category on category.catID = movie_categories.catID WHERE movie_categories.catID = category.catID and category.catID = :catID');
+        // $stmt = $pdo->prepare('SELECT * FROM blog_posts JOIN (movie_categories join category USING (catID)) USING (movieID) WHERE (catID) = :catID');
         $stmt->execute([':catID' => $_GET['id']]);
     } catch (PDOException $e) {
         echo $e->getMessage();
     }
 
     while ($row = $stmt->fetch()) {
-        echo "<div class='container container-body' style='border-style: solid'>";
+        echo "<div class='container container-body' style='border-style: groove'>";
+        echo '<div class="container container-recent">';
         if ($_GET['id'] == $row['catID']) {
-
+      echo "<br>";
             echo '<h1><a href="viewpost.php?id=' . $row['postID'] . '">' . $row['title'] . '</a></h1>';
-            //  echo '<img class="recentblog-image src=" ' . $row['image'] . ' " width="400"/>';
+            echo '<img src=" ' . $row['image'] . ' " width="200", height="200"/>';
             echo '<p>Posted on ' . date('jS M Y H:i:s', strtotime($row['date'])) . " - Rating " . $row['ratingID'] . '</p>';
             echo '<p>' . $row['description'] . '</p>';
             echo '<p><a href="viewpost.php?id=' . $row['postID'] . '">Read More</a></p>';
         } else {
             echo "No posts in this category";
         }
+        echo "</div>";
         echo "</div>";
     }
 }

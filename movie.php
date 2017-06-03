@@ -1,4 +1,5 @@
 <?php
+
 include 'common.php';
 include 'lib/Movie/View/movie_view.php';
 include 'lib/Movie/Validation/movie_validation.php';
@@ -7,6 +8,7 @@ use function Movie\Validation\test_input;
 use function Movie\Validation\validtext;
 use function Movie\View\display;
 
+echo display('header');
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $name = test_input($_POST['name']);
@@ -25,19 +27,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Only letters and numbers allowed"; //need to include spaces
         die();
     }
-//Movie\Db\readMovie($pdo);
-   Movie\Db\addMovie($pdo, $name, $year, $certificate, $runTime, $image, $video);
+    echo "<div class='container container-body'>";
+    Movie\Db\addMovie($pdo, $name, $year, $certificate, $runTime, $image, $video);
+
+    echo "</div>";
 }
-echo display('header');
+
+
+echo Movie\View\display('movie');
+echo display('footer');
 ?>
 
-
-<!doctype html>
-<html>
-
-    <head><title>Movie times</title></head>
-    <body>
-        <?php echo Movie\View\display('movie'); ?>
-        <?php echo display('footer'); ?>
-    </body>
-</html>
