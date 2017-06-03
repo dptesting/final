@@ -172,13 +172,15 @@ function recent_blogs($pdo) {
     try {
         $stmt = $pdo->query('SELECT postID, title, description, content, date, ratingID, blog_posts.movieID, movies.image, movies.movieID FROM blog_posts, movies WHERE movies.movieID = blog_posts.movieID ORDER BY postID DESC'); //lists posts from 
         while ($row = $stmt->fetch()) {
+            echo "<div class='container container-body' style='border-style: groove'>";
             echo '<div class="container container-recent">';
-            echo '<img class="recentblog-image" src=" ' . $row['image'] . ' " width="400"/>';
+            echo '<img class="recentblog-image" src=" ' . $row['image'] . ' " width="300" , height="300"/>';
             echo '<h1 class="recentblog-title"><a href="viewpost.php?id=' . $row['postID'] . '">' . $row['title'] . '</a></h1>';
             echo '<p>Posted on ' . date('jS M Y H:i:s', strtotime($row['date'])) . " - Rating " . $row['ratingID'] . '</p>';
             echo '<p>' . $row['description'] . '</p>';
             echo '<p><a href="viewpost.php?id=' . $row['postID'] . '">Read More</a></p>';
             echo '</div>';
+            echo "</div>";
         }
     } catch (PDOException $e) {
         echo $e->getMessage();
