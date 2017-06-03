@@ -12,7 +12,7 @@ function create_hash($password) {
 }
 
 function signup($pdo, $username, $password, $passwordConfirm, $email, $role) {
-
+    print_r($email);
     echo "<div style='text-align:center'>";
     if (!valid($username)) {
         echo "Only letters and numbers allowed";
@@ -38,10 +38,11 @@ function signup($pdo, $username, $password, $passwordConfirm, $email, $role) {
     $hashedpassword = create_hash($password);
 
     $user = read_user($pdo, $username, $password);
-    $email = read_email($pdo, $email);
+    $email1 = read_email($pdo, $email);
 
 
-    if ((empty($user->username) && (empty($email->email)))) {//checks unique username and unique email
+
+    if ((empty($user->username) && (empty($email1->email)))) {//checks unique username and unique email
         $stmt = $pdo->prepare('INSERT INTO blog_members (username,password,email,roleID) VALUES (:username, :password, :email, :roleID)');
         $stmt->execute([':username' => $username, ':password' => $hashedpassword, ':email' => $email, ':roleID' => $role]);
         $_SESSION['roleID'] = $role;
@@ -89,18 +90,18 @@ function delete_user($pdo, $username) {//deletes a user
 
 //MOVIE FUNCTIONS
 
-function addMovie($pdo, $name, $year, $certificate, $runTime, $image) {//adds a post
+function addMovie($pdo, $name, $year, $certificate, $runTime, $image, $video) {//adds a post
     try {
 //insert into database
-        $stmt = $pdo->prepare('INSERT INTO movies (name,year,certificate,runTime, image) VALUES (:name ,:year, :certificate, :runTime, :image)');
-        $stmt->execute([':name' => $name, ':year' => $year, ':certificate' => $certificate, ':runTime' => $runTime, ':image' => $image]);
-//redirect to index page
-        header('Location: index.php');
+        $stmt = $pdo->prepare('INSERT INTO movies (name,year,certificate,runTime, image, video) VALUES (:name ,:year, :certificate, :runTime, :image, :video)');
+        $stmt->execute([':name' => $name, ':year' => $year, ':certificate' => $certificate, ':runTime' => $runTime, ':image' => $image, ':video' => $video]);
+        header('Location: blogs.php');
         exit;
     } catch (PDOException $e) {
         echo $e->getMessage();
     }
 }
+
 
 function getMovies($pdo) {   //Lists all the movies in the database
     $movieArray = [];
@@ -125,7 +126,16 @@ function getMovies($pdo) {   //Lists all the movies in the database
 
 //BLOG FUNCTIONS
 
-function blogs($pdo, $title, $desc, $content, $movieID, $ratingID) {//adds a post
+function blogs($pdo, $title, $desc, $content, $ratingID) {//adds a post
+    try {
+        $stmt = $pdo->query("SELECT movieID FROM `movies` order by movieID DESC LIMIT 1");
+    } catch (Exception $ex) {
+        
+    }
+    $stmt->execute();
+    $row = $stmt->fetch();
+    $movieID = $row['movieID'];
+
     echo "<div style='text-align:center'>";
     if (!validtext($desc)) {
         echo "Only letters and numbers allowed"; //need to include spaces
@@ -140,6 +150,7 @@ function blogs($pdo, $title, $desc, $content, $movieID, $ratingID) {//adds a pos
     try {
         $stmt = $pdo->prepare('INSERT INTO blog_posts (title,description,content,date,movieID,ratingID) VALUES (:title, :description, :content, :date, :movieID, :ratingID)');
         $stmt->execute([':title' => $title, ':description' => $desc, ':content' => $content, ':date' => date('Y-m-d H:i:s'), ':movieID' => $movieID, ':ratingID' => $ratingID]);
+
         header('Location: index.php');
         exit;
     } catch (PDOException $e) {
@@ -172,15 +183,17 @@ function recent_blogs($pdo) {
     try {
         $stmt = $pdo->query('SELECT postID, title, description, content, date, ratingID, blog_posts.movieID, movies.image, movies.movieID FROM blog_posts, movies WHERE movies.movieID = blog_posts.movieID ORDER BY postID DESC'); //lists posts from 
         while ($row = $stmt->fetch()) {
+            //   echo "<p class='scroll'>";
             echo "<div class='container container-body' style='border-style: groove'>";
             echo '<div class="container container-recent">';
-            echo '<img class="recentblog-image" src=" ' . $row['image'] . ' " width="300" , height="300"/>';
+            echo '<img class="recentblog-image" src=" ' . $row['image'] . ' " width="400" , height="400"/>';
             echo '<h1 class="recentblog-title"><a href="viewpost.php?id=' . $row['postID'] . '">' . $row['title'] . '</a></h1>';
             echo '<p>Posted on ' . date('jS M Y H:i:s', strtotime($row['date'])) . " - Rating " . $row['ratingID'] . '</p>';
             echo '<p>' . $row['description'] . '</p>';
             echo '<p><a href="viewpost.php?id=' . $row['postID'] . '">Read More</a></p>';
             echo '</div>';
             echo "</div>";
+            // echo "</p>";
         }
     } catch (PDOException $e) {
         echo $e->getMessage();

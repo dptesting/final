@@ -25,8 +25,9 @@
                     if (!empty($_SESSION['login_user'])) {
 
                         if ($_SESSION['roleID'] == '1') {
-                            echo "<li class='nav-links'><a href='movie.php'>Add Movie</a></li>";
-                            echo "<li class='nav-links'><a href='blogs.php?blog'>Add Blog</a></li>";
+                            
+                            echo "<li class='nav-links'><a href='movie.php'>Add Movie Blog</a></li>";
+                          //  echo "<li class='nav-links'><a href='blogs.php?blog'>Add Blog</a></li>";
                             echo "<li class='nav-links'><a href='delete.php?delete'>Delete User</a></li>";
                         }
                         echo "<li class='nav-links'><a href='index.php'>Home</a></li>";

@@ -12,9 +12,9 @@ function login($pdo, $username, $password) {
 
     $user = read_user($pdo, $username, $password);
 
-
     if ($username && password_verify($password, ($user->password))) {
-        $_SESSION['roleID'] = $role;
+        $_SESSION['roleID'] = ($user->roleid);
+        
         $_SESSION['login_user'] = $username; // Initializing Session 
         header('Location: index.php');
     } else {
