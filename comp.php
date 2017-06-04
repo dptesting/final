@@ -30,4 +30,4 @@ echo display('header');
 
         </div>
     </body>
-                <?php echo display('footer'); ?>
+    <?php echo display('footer'); ?>

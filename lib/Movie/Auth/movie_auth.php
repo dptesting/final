@@ -14,7 +14,7 @@ function login($pdo, $username, $password) {
 
     if ($username && password_verify($password, ($user->password))) {
         $_SESSION['roleID'] = ($user->roleid);
-        
+
         $_SESSION['login_user'] = $username; // Initializing Session 
         header('Location: index.php');
     } else {

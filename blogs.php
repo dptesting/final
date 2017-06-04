@@ -10,14 +10,14 @@ use function Movie\View\display;
 echo display('header');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-   // readMovie($pdo);
+    // readMovie($pdo);
 
     $title = test_input($_POST['title']);
     $desc = test_input($_POST['description']);
     $content = test_input($_POST['content']);
     $ratingID = test_input($_POST['ratingID']);
 
-  Movie\Db\blogs($pdo, $title, $desc, $content, $ratingID);
+    Movie\Db\blogs($pdo, $title, $desc, $content, $ratingID);
 }
 ?>
 

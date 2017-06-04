@@ -1,4 +1,5 @@
 <?php
+
 include 'common.php'; //connecting to the database
 include 'lib/Movie/Db/MovieClass.php';
 
@@ -8,11 +9,11 @@ use function Movie\View\display;
 
 echo display('header');
 ?>
-    <style>
-        div {
-            text-align: center;
-        }
-    </style>
+<style>
+    div {
+        text-align: center;
+    }
+</style>
 <body>
 
 
