@@ -216,7 +216,7 @@ function viewpost($pdo) {
         echo '<h1>' . $row['title'] . '</h1>';
         echo '<p> Cert' . $row['certificate'] . '      ' . $row['runTime'] . '    ' . $row['year'] . '</p>';
         echo '<p>Posted on ' . date('jS M Y', strtotime($row['date'])) . " - Rating " . $row['ratingID'] . '</p>';
-        echo '<img src=" ' . $row['image'] . ' " width="400"/>';
+        echo '<img src=" ' . $row['image'] . ' " width="400", height="400"/>';
         $test = str_replace('{{video}}', $video, $row['content']);
         echo '<p>' . $row['description'] . '</p>';
         echo '<p>' . $test . '</p>';
@@ -254,7 +254,6 @@ function viewcategory_posts($pdo) {
     }
 
     while ($row = $stmt->fetch()) {
-
         echo "<div class='container container-body' style='border-style: groove'>";
         echo '<div class="container container-recent">';
         echo "<br>";
