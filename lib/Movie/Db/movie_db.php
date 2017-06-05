@@ -141,10 +141,7 @@ function blogs($pdo, $title, $desc, $content, $ratingID) {//adds a post
         return;
     }
 
-    if (!validtext($content)) {
-        echo "Only letters and numbers allowed"; //need to include spaces
-        return;
-    }
+
     echo "</div>";
     try {
         $stmt = $pdo->prepare('INSERT INTO blog_posts (title,description,content,date,movieID,ratingID) VALUES (:title, :description, :content, :date, :movieID, :ratingID)');
