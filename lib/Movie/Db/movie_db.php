@@ -246,7 +246,7 @@ function viewcategory($pdo) {
 function viewcategory_posts($pdo) {
 
     try {
-        $stmt = $pdo->prepare('SELECT movies.movieID, movies.name, movies.image, movies.certificate, movies.year, movies.runTime, blog_posts.postID, blog_posts.movieID, blog_posts.title, blog_posts.description, blog_posts.date, blog_posts.ratingID, movie_categories.movieID, movie_categories.catID, category.catID FROM blog_posts JOIN movies on movies.movieID = blog_posts.movieID JOIN movie_categories on movie_categories.movieID = movies.movieID JOIN category on category.catID = movie_categories.catID WHERE movie_categories.catID = category.catID and category.catID = :catID');
+        $stmt = $pdo->prepare('SELECT movies.movieID, movies.name, movies.image, movies.certificate, movies.year, movies.runTime, blog_posts.postID, blog_posts.movieID, blog_posts.title, blog_posts.description, blog_posts.date, blog_posts.ratingID, movie_categories.movieID, movie_categories.catID, category.catID, category.name FROM blog_posts JOIN movies on movies.movieID = blog_posts.movieID JOIN movie_categories on movie_categories.movieID = movies.movieID JOIN category on category.catID = movie_categories.catID WHERE movie_categories.catID = category.catID and category.catID = :catID');
         // $stmt = $pdo->prepare('SELECT * FROM blog_posts JOIN (movie_categories join category USING (catID)) USING (movieID) WHERE (catID) = :catID');
         $stmt->execute([':catID' => $_GET['id']]);
     } catch (PDOException $e) {
@@ -254,9 +254,11 @@ function viewcategory_posts($pdo) {
     }
 
     while ($row = $stmt->fetch()) {
+
         echo "<div class='container container-body' style='border-style: groove'>";
         echo '<div class="container container-recent">';
         echo "<br>";
+        echo "<h1 style='text-transform: uppercase'>" . $row['name'] . '</h1>';
         echo '<h1><a href="viewpost.php?id=' . $row['postID'] . '">' . $row['title'] . '</a></h1>';
         echo '<p> Cert' . $row['certificate'] . '      ' . $row['runTime'] . '    ' . $row['year'] . '</p>';
         echo '<img src=" ' . $row['image'] . ' " width="200", height="200"/>';
@@ -266,8 +268,15 @@ function viewcategory_posts($pdo) {
 
         echo "</div>";
         echo "</div>";
+
     }
-    //            echo "No posts in this category";
+    if (empty($row)) {
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<br>";
+        echo "<p style='text-align: left'>" . "   No posts in this category" . "</style></p>";
+    }
 }
 
 //Comments FUNCTIONS
