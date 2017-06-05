@@ -270,13 +270,7 @@ function viewcategory_posts($pdo) {
         echo "</div>";
 
     }
-    if (empty($row)) {
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<br>";
-        echo "<p style='text-align: left'>" . "   No posts in this category" . "</style></p>";
-    }
+
 }
 
 //Comments FUNCTIONS
