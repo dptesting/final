@@ -39,8 +39,9 @@ echo display('header');
 
             $newComment->addcomments();
         }
-        echo display('footer');
     }
+    echo "</div>";
+    echo display('footer');
 
 
 
